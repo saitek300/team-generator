@@ -1,54 +1,143 @@
+const Employee = require("./lib/Employee");
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateMyTeam = require('./generateMyTeam');
+//const generateMyTeam = require('./generateMyTeam');
 
-const questions = [
-    {
-        type: 'input',
-        name: 'name',
-        message: `what is your employee's name?`,
-    },
-    {
-        type:'input',
-        name:'email',
-        message:`what is your employee's email address?`,
-    },
-    {
-        type:'input',
-        name:'ID',
-        message:`what is the employee's ID?`,
-    },
-    {
-        type: 'list',
-        name: 'Role',
-        message: `what is the role of the employee?`,
-        choices: [`Manager`,`Engineer`,`Intern`],
-    },
-    
+let Team = []
 
-];
+const teamMembers = {
+    Manager: [{
+        type: "input",
+        message: "What is the manager's name? ",
+        name: "managerName"
+    },
+    {
+        type: "input",
+        message: "What is the manager's id? ",
+        name: "managerId"
+    },
 
-// funtion for generating the html
-function writeToFile(fileName, data) {
-    fs.writeFile(fileName,data,function(err){
-        console.log(fileName)
-        console.log(data)
-        if (err){
-            console.log("an error has occured")
-        } else {
-            console.log("success")
-        }
-    })
+    {
+        type: "input",
+        message: "What is the manager's email? ",
+        name: "managerEmail"
+    },
+    {
+        type: "input",
+        message: "What is the manager's office number? ",
+        name: "officeNumber"
+
+    }
+    ],
+
+
+    Engineer: [{
+        type: "input",
+        message: "What is the engineer's name? ",
+        name: "engineerName"
+    },
+    {
+        type: "input",
+        message: "What is the engineer's id? ",
+        name: "engineerId"
+    },
+
+    {
+        type: "input",
+        message: "What is the engineer's email? ",
+        name: "engineerEmail"
+    }, {
+
+        type: "input",
+        message: "What is the engineer's Github username? ",
+        name: "Github"
+    }
+    ],
+
+    Intern: [{
+        type: "input",
+        message: "What is the intern's name? ",
+        name: "internName"
+    },
+    {
+        type: "input",
+        message: "What is the intern's id? ",
+        name: "internId"
+    },
+
+    {
+        type: "input",
+        message: "What is the intern's email? ",
+        name: "internEmail"
+    }, {
+        type: "input",
+        message: "What is the intern's school? ",
+        name: "school"
+    }
+
+    ]
 }
 
-// input function for html template
+
+
 function init() {
-    inquirer.prompt(questions)
-        .then(function(data) {
-            writeToFile("My-Team.html", generateMyTeam(data));
+
+    inquirer.prompt(addNew).then(answer => {
+        if (answer.addMember === "yes") {
+            addRole();
+        } else {
+
+        }
+    })
+};
+
+const addNew = {
+    type: `list`,
+    message: `would you like to add an employee?`,
+    name: `addMember`,
+    choices: ["yes", "no"]
+}
+
+function addRole() {
+    inquirer.prompt({
+        type: 'list',
+        message: 'what role would you like to assign this employee?',
+        name: 'addrole',
+        choices: ['manager', 'engineer', 'intern']
+    })
+        .then(answer => {
+            if (answer.addrole === "manager") {
+                inquirer.prompt(teamMembers.Manager)
+                    .then(managerData => {
+                        const manager = new Manager(managerData.managerName, managerData.managerId, managerData.managerEmail, managerData.officeNumber)
+
+                        Team.push(manager)
+                        console.log(Team)
+                    })
+
+            } else if (answer.addrole === "engineer") {
+                inquirer.prompt(teamMembers.Engineer)
+                    .then(engineerData => {
+                        const engineer = new Engineer(engineerData.engineerName, engineerData.engineerId, engineerData.engineerEmail, engineerData.Github)
+
+                        Team.push(engineer)
+                        console.log(Team)
+                    })
+            } else if (answer.addrole === "intern") {
+                inquirer.prompt(teamMembers.Intern)
+                    .then(internData => {
+                        const intern = new Intern(internData.internName, internData.internId, internData.internEmail, internData.school)
+
+                        Team.push(intern)
+                        console.log(Team)
+                    })
+            }
+
         })
 
 }
-
-
-init();
+init()
