@@ -2,12 +2,12 @@ const Employee = require("./lib/Employee");
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
-
+const path = require("path")
 const inquirer = require('inquirer');
 const fs = require('fs');
-//const generateMyTeam = require('./generateMyTeam');
-
-let Team = []
+const generateMyteam = require('./src/generateMyteam');
+const distDir = path.resolve(__dirname, 'dist')
+const team = []
 
 const teamMembers = {
     Manager: [{
@@ -84,30 +84,37 @@ const teamMembers = {
 
 
 
-function init() {
 
-    inquirer.prompt(addNew).then(answer => {
-        if (answer.addMember === "yes") {
-            addRole();
-        } else {
+function addNew() {
+    inquirer.prompt(
+        [{
 
-        }
-    })
-};
+            type: `list`,
+            message: `would you like to add an employee?`,
+            name: `addMember`,
+            choices: ["yes", "no"]
+        }]).then(answer => {
+            switch (answer.addMember) {
+                case 'yes':
+                    addRole()
+                    break;
 
-const addNew = {
-    type: `list`,
-    message: `would you like to add an employee?`,
-    name: `addMember`,
-    choices: ["yes", "no"]
+                default:
+                    generateTeam()
+                    break;
+            }
+
+        })
+
 }
 
+//function init() {
 function addRole() {
     inquirer.prompt({
         type: 'list',
         message: 'what role would you like to assign this employee?',
         name: 'addrole',
-        choices: ['manager', 'engineer', 'intern']
+        choices: ['manager', 'engineer', 'intern', 'no thank you']
     })
         .then(answer => {
             if (answer.addrole === "manager") {
@@ -115,8 +122,8 @@ function addRole() {
                     .then(managerData => {
                         const manager = new Manager(managerData.managerName, managerData.managerId, managerData.managerEmail, managerData.officeNumber)
 
-                        Team.push(manager)
-                        console.log(Team)
+                        team.push(manager)
+                        console.log(team)
                     })
 
             } else if (answer.addrole === "engineer") {
@@ -124,20 +131,30 @@ function addRole() {
                     .then(engineerData => {
                         const engineer = new Engineer(engineerData.engineerName, engineerData.engineerId, engineerData.engineerEmail, engineerData.Github)
 
-                        Team.push(engineer)
-                        console.log(Team)
+                        team.push(engineer)
+                        addNew()
+                        console.log(team)
                     })
             } else if (answer.addrole === "intern") {
                 inquirer.prompt(teamMembers.Intern)
                     .then(internData => {
                         const intern = new Intern(internData.internName, internData.internId, internData.internEmail, internData.school)
 
-                        Team.push(intern)
-                        console.log(Team)
+                        team.push(intern)
+                        console.log(team)
                     })
             }
 
         })
 
 }
-init()
+
+function generateTeam() {
+    if (!fs.existsSync(distDir)) {
+        fs.mkdirSync(distDir)
+    }
+    fs.writeFileSync(path.join(distDir, 'team.html'), generateMyteam(team), 'utf-8')
+    console.log('has been created')
+}
+
+addNew()
