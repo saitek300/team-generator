@@ -1,5 +1,61 @@
 // html template
-function generateMyTeam(data) {
+function generateMyTeam(team) {
+    console.log(team)
+    function generateEngineer(engineer) {
+        console.log(engineer)
+        return `<div class="card" style="width: 18rem;">
+        <div class="card-header">
+          ${engineer.getRole()}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Name: ${engineer.getName()}</li>
+          <li class="list-group-item">Email: ${engineer.getEmail()}</li>
+          <li class="list-group-item">Id: ${engineer.getId()}</li>
+          <li class="list-group-item">Github: ${engineer.getGithub()}</li>
+        </ul>
+      </div>`
+    }
+
+    function generateManager(manager) {
+        console.log(manager)
+        return `<div class="card" style="width: 18rem;">
+        <div class="card-header">
+          ${manager.getRole()}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Name: ${manager.getName()} </li>
+          <li class="list-group-item">Email: ${manager.getEmail()} </li>
+          <li class="list-group-item">Id:${manager.getId()} </li>
+          <li class="list-group-item">Office Number: ${manager.getOfficeNumber()} </li>
+        </ul>
+      </div>`
+    }
+
+    function generateIntern(intern) {
+        console.log(intern)
+        return `<div class="card" style="width: 18rem;">
+        <div class="card-header">
+          ${intern.getRole()}
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Name: ${intern.getName()}</li>
+          <li class="list-group-item">Email: ${intern.getEmail()}</li>
+          <li class="list-group-item">Id: ${intern.getId()}</li>
+          <li class="list-group-item">School ${intern.getSchool()}</li>
+        </ul>
+      </div>`
+    }
+    const tempArr = []
+    tempArr.push(team.filter(employee => employee.getRole() === 'Engineer').map(engineer => generateEngineer(engineer)).join(''))
+    return tempArr.join('')
+
+}
+
+
+
+module.exports = team => {
+    console.log(team)
+
     return `<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -13,15 +69,21 @@ function generateMyTeam(data) {
     <body>
         <header class= bg-danger text-white>MyTeam</header>
 
+        <div class= 'container'>
+            <div class= 'row'>
+            <div class= 'col-12 d-flex justify-content-center'>
+                ${generateMyTeam(team)}
+        </div>
+        
+
 
 
 
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>  
-        <script src="index.js"
+        <script src="index.js"></script>
     </body>
     </html>`
 };
 
-module.exports = generateMyTeam;
