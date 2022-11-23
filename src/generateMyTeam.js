@@ -9,9 +9,9 @@ function generateMyTeam(team) {
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Name: ${engineer.getName()}</li>
-          <li class="list-group-item">Email: ${engineer.getEmail()}</li>
+          <li class="list-group-item">Email: <a href = "mailto: ${engineer.getEmail()}">${engineer.getEmail()}</a></li>
           <li class="list-group-item">Id: ${engineer.getId()}</li>
-          <li class="list-group-item">Github: ${engineer.getGithub()}</li>
+          <li class="list-group-item">Github: <a href = "https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></li>
         </ul>
       </div>`
     }
@@ -24,7 +24,7 @@ function generateMyTeam(team) {
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Name: ${manager.getName()} </li>
-          <li class="list-group-item">Email: ${manager.getEmail()} </li>
+          <li class="list-group-item">Email: <a href = "mailto: ${manager.getEmail()}">${manager.getEmail()}</a></li>
           <li class="list-group-item">Id:${manager.getId()} </li>
           <li class="list-group-item">Office Number: ${manager.getOfficeNumber()} </li>
         </ul>
@@ -39,7 +39,7 @@ function generateMyTeam(team) {
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Name: ${intern.getName()}</li>
-          <li class="list-group-item">Email: ${intern.getEmail()}</li>
+          <li class="list-group-item">Email: <a href = "mailto: ${intern.getEmail()}">${intern.getEmail()}</a></li>
           <li class="list-group-item">Id: ${intern.getId()}</li>
           <li class="list-group-item">School ${intern.getSchool()}</li>
         </ul>
@@ -71,7 +71,7 @@ module.exports = team => {
         <title>MyTeam</title>
     </head>
     <body>
-        <header class= bg-danger text-white>MyTeam</header>
+        <header class= "text-center bg-danger text-white">MyTeam</header>
 
         <div class= 'container'>
             <div class= 'row'>
