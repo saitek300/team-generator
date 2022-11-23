@@ -4,11 +4,10 @@ function generateMyTeam(team) {
     function generateEngineer(engineer) {
         console.log(engineer)
         return `<div class="card" style="width: 18rem;">
-        <div class="card-header">
-          ${engineer.getRole()}
+        <div class="card-header bg-primary text-white">
+          ${engineer.getRole()}: ${engineer.getName()}
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Name: ${engineer.getName()}</li>
           <li class="list-group-item">Email: <a href = "mailto: ${engineer.getEmail()}">${engineer.getEmail()}</a></li>
           <li class="list-group-item">Id: ${engineer.getId()}</li>
           <li class="list-group-item">Github: <a href = "https://github.com/${engineer.getGithub()}">${engineer.getGithub()}</a></li>
@@ -19,11 +18,10 @@ function generateMyTeam(team) {
     function generateManager(manager) {
         console.log(manager)
         return `<div class="card" style="width: 18rem;">
-        <div class="card-header">
-          ${manager.getRole()}
+        <div class="card-header bg-primary text-white">
+          ${manager.getRole()}: ${manager.getName()}
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Name: ${manager.getName()} </li>
           <li class="list-group-item">Email: <a href = "mailto: ${manager.getEmail()}">${manager.getEmail()}</a></li>
           <li class="list-group-item">Id:${manager.getId()} </li>
           <li class="list-group-item">Office Number: ${manager.getOfficeNumber()} </li>
@@ -34,11 +32,10 @@ function generateMyTeam(team) {
     function generateIntern(intern) {
         console.log(intern)
         return `<div class="card" style="width: 18rem;">
-        <div class="card-header">
-          ${intern.getRole()}
+        <div class="card-header bg-primary text-white">
+          ${intern.getRole()}: ${intern.getName()}
         </div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item">Name: ${intern.getName()}</li>
           <li class="list-group-item">Email: <a href = "mailto: ${intern.getEmail()}">${intern.getEmail()}</a></li>
           <li class="list-group-item">Id: ${intern.getId()}</li>
           <li class="list-group-item">School ${intern.getSchool()}</li>
@@ -75,7 +72,7 @@ module.exports = team => {
 
         <div class= 'container'>
             <div class= 'row'>
-            <div class= 'col-12 d-flex justify-content-center'>
+            <div class= 'col-12 d-flex justify-content-around'>
                 ${generateMyTeam(team)}
         </div>
         
