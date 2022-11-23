@@ -123,6 +123,7 @@ function addRole() {
                         const manager = new Manager(managerData.managerName, managerData.managerId, managerData.managerEmail, managerData.officeNumber)
 
                         team.push(manager)
+                        addNew()
                         console.log(team)
                     })
 
@@ -141,6 +142,7 @@ function addRole() {
                         const intern = new Intern(internData.internName, internData.internId, internData.internEmail, internData.school)
 
                         team.push(intern)
+                        addNew()
                         console.log(team)
                     })
             }
